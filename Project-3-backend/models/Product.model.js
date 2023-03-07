@@ -1,40 +1,41 @@
 const { Schema, model, Types } = require("mongoose");
-const {User} = require('../models/User.model');
+const { User } = require("../models/User.model");
 
 const NewProductSchema = new Schema(
-
   {
     title: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String
+      type: String,
     },
     price: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     brand: {
-        type: String
+      type: String,
+      enum: ["Apple", "Samsung", "Google", "Microsoft", "Other"],
+      required: true,
     },
     category: {
-        type: String,
-        enum : ["new", "used"],
-        required: true,
+      type: String,
+      enum: ["new", "used"],
+      required: true,
     },
-  addedBy: {
+    image: String,
+    addedBy: {
       type: Schema.Types.ObjectId,
       ref: "User",
-   },
+    },
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`    
-    timestamps: true
+    // this second object adds extra properties: `createdAt` and `updatedAt`
+    timestamps: true,
   }
 );
 
 const NewProduct = model("NewProduct", NewProductSchema);
 
 module.exports = NewProduct;
-

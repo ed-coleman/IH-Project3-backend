@@ -75,6 +75,14 @@ if (req.payload) {
 }
 })
 
+// Profile route
+
+router.get ('/profile', isAuthenticated, (req, res) => {
+  if (req.payload) {
+    res.json(req.payload.data.user)
+  }
+})
+
 // get all users
 
 router.get("/users", async (req, res, next) => {
@@ -128,5 +136,6 @@ router.delete('/:username/delete', async (req, res, next) => {
         console.log(error); 
     }
 })
+
 
 module.exports = router;

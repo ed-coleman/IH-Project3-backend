@@ -1,6 +1,7 @@
 const { Schema, model, Types } = require("mongoose");
 const { User } = require("../models/User.model");
 
+
 const NewProductSchema = new Schema(
   {
     title: {
@@ -24,12 +25,15 @@ const NewProductSchema = new Schema(
       enum: ["new", "used"],
       required: true,
     },
-    image: String,
-    addedBy: {
+    image: {
+      type: String,
+      default: '"/images/iphone.png"'
+    },
+    addedBy:  {
       type: Schema.Types.ObjectId,
       ref: "User",
+    }
     },
-  },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,

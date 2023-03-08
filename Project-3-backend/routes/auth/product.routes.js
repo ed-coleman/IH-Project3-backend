@@ -50,6 +50,7 @@ router.get('/products/:id/withReviews', async (req, res, next) => {
 router.post('/products',  async (req, res, next) => {
 console.log(req.payload)
     const body = req.body;
+    console.log(req.body)
     try { 
         const product = await Product.create(body);
         console.log(product);

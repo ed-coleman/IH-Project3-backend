@@ -47,12 +47,14 @@ router.get('/products/:id/withReviews', async (req, res, next) => {
 })
 
 // create a new product
-router.post('/products',  async (req, res, next) => {
-console.log(req.payload)
+router.post('/products', isAuthenticated, async (req, res, next) => {
+console.log( 'xyoooooooooooo', req.payload)
+const user = req.payload.data
     const body = req.body;
     console.log(req.body)
     try { 
-        const product = await Product.create(body);
+        const product = await Product.create({...body, createBy: user._id});
+        const user = await User.findByIdAndUpdate(user._id, {$push: {listedProducts: product._id}}, {new:true, runValidators: true})
         console.log(product);
         res.json(product);
     } catch (error) { 

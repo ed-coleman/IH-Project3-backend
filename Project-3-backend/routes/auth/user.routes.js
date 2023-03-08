@@ -50,10 +50,13 @@ router.post("/login", async (req, res) => {
 
       //Generate the JWT
  
+      delete currentUser._doc.passwordHash
+
+
       const token = jwt.sign(
         {
           exp: Math.floor(Date.now() / 1000) + 60 * 60, // makes sure the token will expire after a set time
-          data: { user: { userName: currentUser.userName, email: currentUser.email } },
+          data: currentUser
         },
         process.env.TOKEN_SECRET
       ); // adds a secret to the .env
@@ -71,7 +74,7 @@ router.post("/login", async (req, res) => {
 router.get ('/verify', isAuthenticated, (req, res) => {
 if (req.payload) {
   console.log(req.payload)
-  res.json(req.payload.data.user)
+  res.json(req.payload)
 }
 })
 
@@ -79,7 +82,7 @@ if (req.payload) {
 
 router.get ('/profile', isAuthenticated, (req, res) => {
   if (req.payload) {
-    res.json(req.payload.data.user)
+    res.json(req.payload.data)
   }
 })
 

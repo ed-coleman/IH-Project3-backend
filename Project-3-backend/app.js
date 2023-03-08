@@ -10,14 +10,11 @@ require("./db");
 const express = require("express");
 
 //adyen backend
-const config = require('./config') //port + base url
 const cors = require('cors')
 const corsOptions = {
     origin: '*',
 }
-//different domains, ports, etc
-const baseUrl = config.baseUrl;
-const port = config.port;
+
 
 const app = express();
 
@@ -44,6 +41,9 @@ app.use(reviewRoutes)
 
 const authRoutes = require('./routes/auth/auth.routes')
 app.use(authRoutes)
+
+const adyenRoutes = require('./routes/auth/adyen.routes')
+app.use(adyenRoutes)
 
 
 

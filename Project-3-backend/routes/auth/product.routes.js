@@ -3,7 +3,8 @@ const { isAuthenticated } = require('../../middleware/jwt.middleware');
 const router = express.Router();
 const Product = require('../../models/Product.model');
 const Review = require('../../models/Review.model');
-const isAuth = require("../../middleware/isAuth.js")
+const isAuth = require("../../middleware/isAuth.js");
+const User = require('../../models/User.model');
 
 // // get products page
 // router.get('/products', async (req, res) => {
@@ -54,7 +55,7 @@ const user = req.payload.data
     console.log(req.body)
     try { 
         const product = await Product.create({...body, createBy: user._id});
-        const user = await User.findByIdAndUpdate(user._id, {$push: {listedProducts: product._id}}, {new:true, runValidators: true})
+        const foundUser = await User.findByIdAndUpdate(user._id, {$push: {listedProducts: product._id}}, {new:true, runValidators: true})
         console.log(product);
         res.json(product);
     } catch (error) { 

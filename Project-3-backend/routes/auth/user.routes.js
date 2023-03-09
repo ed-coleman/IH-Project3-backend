@@ -80,11 +80,18 @@ if (req.payload) {
 
 // Profile route
 
-router.get ('/profile', isAuthenticated, (req, res) => {
-  if (req.payload) {
-    res.json(req.payload.data)
+router.get("/profile", isAuthenticated, async (req, res) => {
+  try {
+    const user = await User.findOne({
+      userName: req.payload.data.userName,
+    }).populate('listedProducts');
+    delete user._doc.passwordHash;
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
   }
-})
+});
 
 // get all users
 

@@ -32,7 +32,7 @@ module.exports = app => {
         maxAge: 600000 // 60 * 1000 ms === 1 min
       }, // ADDED code below !!!
       store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/project3"
+        mongoUrl: process.env.MONGODB_URI || "mongodb://localhost:27017/Project-3-backend"
  
         // ttl => time to live
         // ttl: 60 * 60 * 24 // 60sec * 60min * 24h => 1 day
